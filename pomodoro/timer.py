@@ -1,48 +1,66 @@
 import time
 
-print("teste de lógica do tempo pomodoro em python")
-
 def foco(segundos_totais): #1500 segundos para chegar nos 25 minutos
-    try:
         pausa = False
         while segundos_totais > 0:
-            if not pausa:
-                minutos, segundos = divmod(segundos_totais, 60)
-                print(f"{minutos:02} : {segundos:02}")
-                time.sleep(1)
-                segundos_totais -= 1  
-        print("ACABOU O FOCO") 
-    except  KeyboardInterrupt:
-        print("Você pausou o tempo!!!")
-    print("ACABOU!!!")
+            try:    
+                if not pausa:
+                    minutos, segundos = divmod(segundos_totais, 60)
+                    print(f"{minutos:02} : {segundos:02}")
+                    time.sleep(1)
+                    segundos_totais -= 1
+                else:
+                    time.sleep(1)
+
+            except  KeyboardInterrupt:
+                pausa = not pausa
+                #if pausa: 
+                    #print("Pausado!")
+                #else:
+                    #print("Voltando")
+        #print("Ciclo de foco concluído!")         
+        
 
 def pausa_leve(segundos_totais): #300 segundos para chegar nos 5 minutos
-    try:
         pausa = False
         while segundos_totais > 0:
-            if not pausa:
-                minutos, segundos = divmod(segundos_totais, 60)
-                print(f"{minutos:02} : {segundos:02}")
-                time.sleep(1)
-                segundos_totais -= 1
-        print("ACABOA PAUSA LEVE")
-    except  KeyboardInterrupt:
-        print("Você pausou o tempo!!!")
-    print("ACABOU!!!")
+            try:
+                if not pausa:
+                    minutos, segundos = divmod(segundos_totais, 60)
+                    print(f"{minutos:02} : {segundos:02}")
+                    time.sleep(1)
+                    segundos_totais -= 1
+                else:
+                    time.sleep(1)
 
-def pausa_longa(segundos_totais): #900 segundos para chegar nos 15 minutos
-    try:
+            except  KeyboardInterrupt:
+                 pausa = not pausa
+                 #if pausa:
+                     #print("Pausando")
+                 #else:
+                    #print("Voltando")
+        #print("Ciclo de pausa leve concluído!")     
+        
+
+def pausa_longa(segundos_totais): #900 segundos para chegar nos 15 minutos#
         pausa = False
         while segundos_totais > 0:
-            if not pausa:
-                minutos, segundos = divmod(segundos_totais, 60)
-                print(f"{minutos:02} : {segundos:02}")
-                time.sleep(1)
-                segundos_totais -= 1
-        print("ACABOU A PAUSA LONGA")
-    except  KeyboardInterrupt:
-        print("Você pausou o tempo!!!")
-    print("ACABOU!!!")
+            try:
+                if not pausa:
+                    minutos, segundos = divmod(segundos_totais, 60)
+                    print(f"{minutos:02} : {segundos:02}")
+                    time.sleep(1)
+                    segundos_totais -= 1
+                else:
+                    time.sleep(1)
+
+            except  KeyboardInterrupt:
+                pausa = not pausa
+                #if pausa:
+                    #print("Pausando")
+                #else:
+                    #print("Voltando")
+        #print ("Ciclo de pausa longa concluído!")
 
 def reiniciar(funcao): #reinicia uma das contagens
     if funcao == foco:
