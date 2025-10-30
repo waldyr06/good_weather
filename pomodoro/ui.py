@@ -1,5 +1,8 @@
 import tkinter as tk
-from pomodoro import timer
+import timer
+
+#Espaço para eu armazenar o tempo de cada uma das variaveis em segundos
+segundos_totais = 1500
 
 root = tk.Tk()
 root.title("Pomodoro Timer")
@@ -26,13 +29,14 @@ titulo.place(relx=0.5, rely=0.15, anchor="center")
 foco_container = tk.Frame(frame_foco, bg=frame_foco["bg"])
 foco_container.pack(expand=True)
 
-botao_foco = tk.Button(foco_container, text=">", bg=frame_foco["bg"], fg="#471515", font=("Arial", 20, "bold"), border=10, relief=tk.FLAT)
-botao_foco.pack(side='bottom')
+label_min = tk.Label(foco_container, text="00", bg=frame_foco["bg"], fg="#471515", font=("Arial", 130, "bold"), anchor="center")
+label_min.pack(expand=True)
 
-tk.Label(foco_container, text="00", bg=frame_foco["bg"], fg="#471515",
-         font=("Arial", 130, "bold"), anchor="center").pack(expand=True)
-tk.Label(foco_container, text="00", bg=frame_foco["bg"], fg="#471515",
-         font=("Arial", 130, "bold"), anchor="center").pack()
+label_seg = tk.Label(foco_container, text="00", bg=frame_foco["bg"], fg="#471515", font=("Arial", 130, "bold"), anchor="center")
+label_seg.pack() 
+
+botao_foco = tk.Button(foco_container, command=lambda: timer.foco(segundos_totais, label_min, label_seg, root), text=">", bg=frame_foco["bg"], fg="#471515", font=("Arial", 20, "bold"), border=10, relief=tk.FLAT)
+botao_foco.pack(side='bottom')
 
 # --- BLOCO PAUSA LEVE ---
 titulo1 = tk.Label(frame_pausa_leve, text="Pausa Leve", bg=frame_pausa_leve["bg"], fg="#14401D", font=("Arial", 16, "bold"))
@@ -63,15 +67,5 @@ tk.Label(pausa_longa_container, text="00", bg=frame_pausa_longa["bg"], fg="#1530
          font=("Arial", 130, "bold"), anchor="center").pack(expand=True)
 tk.Label(pausa_longa_container, text="00", bg=frame_pausa_longa["bg"], fg="#153047",
          font=("Arial", 130, "bold"), anchor="center").pack()
-
-def foco():
-    tempo_restante = 25 * 60  # 25 minutos
-    atualizar_tempo(tempo_restante, frame_foco)
-
-def atualizar_tempo(segundos, label):
-    minutos, seg = divmod(segundos, 60)
-    label.config(text=f"{minutos:02}:{seg:02}")
-    if segundos > 0:
-        root.after(1000, atualizar_tempo, segundos - 1, label)
 
 root.mainloop()
