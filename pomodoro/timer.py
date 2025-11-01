@@ -3,16 +3,16 @@ import time
 # VARIÁVEL GLOBAL: Usamos uma lista para que a função possa modificar o valor
 TIMER_ID = [None] 
 
-def foco(segundos_totais, label_min, label_seg, root): 
+def foco(segundos_totais_foco, label_min, label_seg, root): 
     def atualizar():
-        nonlocal segundos_totais 
+        nonlocal segundos_totais_foco 
         # Apenas se o tempo não acabou
-        if segundos_totais >= 0:           
-            minutos, segundos = divmod(segundos_totais, 60)
+        if segundos_totais_foco >= 0:           
+            minutos, segundos = divmod(segundos_totais_foco, 60)
             label_min.config(text=f"{minutos:02}")
             label_seg.config(text=f"{segundos:02}")
         
-            segundos_totais -= 1            
+            segundos_totais_foco -= 1            
             
 
             TIMER_ID[0] = root.after(1000, atualizar) 
@@ -33,46 +33,64 @@ def foco(segundos_totais, label_min, label_seg, root):
     atualizar()        
         
 
-def pausa_leve(segundos_totais): #300 segundos para chegar nos 5 minutos
-        pausa = False
-        while segundos_totais > 0:
-            try:
-                if not pausa:
-                    minutos, segundos = divmod(segundos_totais, 60)
-                    print(f"{minutos:02} : {segundos:02}")
-                    time.sleep(1)
-                    segundos_totais -= 1
-                else:
-                    time.sleep(1)
+def pausa_leve(segundos_totais_pausa_leve, label_min2, label_seg2, root): 
+    def atualizar():
+        nonlocal segundos_totais_pausa_leve
+        # Apenas se o tempo não acabou
+        if segundos_totais_pausa_leve >= 0:           
+            minutos, segundos = divmod(segundos_totais_pausa_leve, 60)
+            label_min2.config(text=f"{minutos:02}")
+            label_seg2.config(text=f"{segundos:02}")
+        
+            segundos_totais_pausa_leve -= 1            
+            
 
-            except  KeyboardInterrupt:
-                 pausa = not pausa
-                 #if pausa:
-                     #print("Pausando")
-                 #else:
-                    #print("Voltando")
-        #print("Ciclo de pausa leve concluído!")     
+            TIMER_ID[0] = root.after(1000, atualizar) 
+            
+        else:
+             #provavel que vai da erro, não pode ter print
+             print("Fim do Tempo de Foco!")
+             # Limpar o ID do timer quando terminar
+             TIMER_ID[0] = None 
+
+
+    # 2. LÓGICA DE INÍCIO DA FUNÇÃO FOCO (Chamada pelo botão)    
+    # Cancela qualquer timer anterior se o botão for pressionado enquanto um timer roda
+    if TIMER_ID[0]:
+        root.after_cancel(TIMER_ID[0])
+        TIMER_ID[0] = None # Limpa o ID      
+    # Inicia a contagem
+    atualizar()          
         
 
-def pausa_longa(segundos_totais): #900 segundos para chegar nos 15 minutos#
-        pausa = False
-        while segundos_totais > 0:
-            try:
-                if not pausa:
-                    minutos, segundos = divmod(segundos_totais, 60)
-                    print(f"{minutos:02} : {segundos:02}")
-                    time.sleep(1)
-                    segundos_totais -= 1
-                else:
-                    time.sleep(1)
+def pausa_longa(segundos_totais_pausa_longa, label_min3, label_seg3, root): 
+    def atualizar():
+        nonlocal segundos_totais_pausa_longa
+        # Apenas se o tempo não acabou
+        if segundos_totais_pausa_longa >= 0:           
+            minutos, segundos = divmod(segundos_totais_pausa_longa, 60)
+            label_min3.config(text=f"{minutos:02}")
+            label_seg3.config(text=f"{segundos:02}")
+        
+            segundos_totais_pausa_longa -= 1            
+            
 
-            except  KeyboardInterrupt:
-                pausa = not pausa
-                #if pausa:
-                    #print("Pausando")
-                #else:
-                    #print("Voltando")
-        #print ("Ciclo de pausa longa concluído!")
+            TIMER_ID[0] = root.after(1000, atualizar) 
+            
+        else:
+             #provavel que vai da erro, não pode ter print
+             print("Fim do Tempo de Foco!")
+             # Limpar o ID do timer quando terminar
+             TIMER_ID[0] = None 
+
+
+    # 2. LÓGICA DE INÍCIO DA FUNÇÃO FOCO (Chamada pelo botão)    
+    # Cancela qualquer timer anterior se o botão for pressionado enquanto um timer roda
+    if TIMER_ID[0]:
+        root.after_cancel(TIMER_ID[0])
+        TIMER_ID[0] = None # Limpa o ID      
+    # Inicia a contagem
+    atualizar()          
 
 def reiniciar(funcao): #reinicia uma das contagens
     if funcao == foco:

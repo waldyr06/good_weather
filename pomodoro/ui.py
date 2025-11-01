@@ -2,7 +2,9 @@ import tkinter as tk
 import timer
 
 #Espaço para eu armazenar o tempo de cada uma das variaveis em segundos
-segundos_totais = 1500
+segundos_totais_foco = 1500
+segundos_totais_pausa_leve = 300
+segundos_totais_pausa_longa = 900
 
 root = tk.Tk()
 root.title("Pomodoro Timer")
@@ -29,13 +31,13 @@ titulo.place(relx=0.5, rely=0.15, anchor="center")
 foco_container = tk.Frame(frame_foco, bg=frame_foco["bg"])
 foco_container.pack(expand=True)
 
-label_min = tk.Label(foco_container, text="00", bg=frame_foco["bg"], fg="#471515", font=("Arial", 130, "bold"), anchor="center")
+label_min = tk.Label(foco_container, text="25", bg=frame_foco["bg"], fg="#471515", font=("Arial", 130, "bold"), anchor="center")
 label_min.pack(expand=True)
 
 label_seg = tk.Label(foco_container, text="00", bg=frame_foco["bg"], fg="#471515", font=("Arial", 130, "bold"), anchor="center")
 label_seg.pack() 
 
-botao_foco = tk.Button(foco_container, command=lambda: timer.foco(segundos_totais, label_min, label_seg, root), text=">", bg=frame_foco["bg"], fg="#471515", font=("Arial", 20, "bold"), border=10, relief=tk.FLAT)
+botao_foco = tk.Button(foco_container, command=lambda: timer.foco(segundos_totais_foco, label_min, label_seg, root), text=">", bg=frame_foco["bg"], fg="#471515", font=("Arial", 20, "bold"), border=10, relief=tk.FLAT)
 botao_foco.pack(side='bottom')
 
 # --- BLOCO PAUSA LEVE ---
@@ -45,13 +47,14 @@ titulo1.place(relx=0.5, rely=0.15, anchor="center")
 pausa_leve_container = tk.Frame(frame_pausa_leve, bg=frame_pausa_leve["bg"])
 pausa_leve_container.pack(expand=True)
 
-botao_pausa_leve = tk.Button(pausa_leve_container, text=">", bg=frame_pausa_leve["bg"], fg="#14401D", font=("Arial", 20, "bold"), border=10, relief=tk.FLAT)
-botao_pausa_leve.pack(side='bottom')
+label_min2 = tk.Label(pausa_leve_container, text="05", bg=frame_pausa_leve["bg"], fg="#14401D", font=("Arial", 130, "bold"), anchor="center")
+label_min2.pack(expand=True)
 
-tk.Label(pausa_leve_container, text="00", bg=frame_pausa_leve["bg"], fg="#14401D",
-         font=("Arial", 130, "bold"), anchor="center").pack(expand=True)
-tk.Label(pausa_leve_container, text="00", bg=frame_pausa_leve["bg"], fg="#14401D",
-         font=("Arial", 130, "bold"), anchor="center").pack()
+label_seg2 = tk.Label(pausa_leve_container, text="00", bg=frame_pausa_leve["bg"], fg="#14401D", font=("Arial", 130, "bold"), anchor="center")
+label_seg2.pack()
+
+botao_pausa_leve = tk.Button(pausa_leve_container, command=lambda: timer.pausa_leve(segundos_totais_pausa_leve, label_min2, label_seg2, root), text=">", bg=frame_pausa_leve["bg"], fg="#14401D", font=("Arial", 20, "bold"), border=10, relief=tk.FLAT)
+botao_pausa_leve.pack(side='bottom')
 
 # --- BLOCO PAUSA LONGA ---
 titulo2 = tk.Label(frame_pausa_longa, text="Pausa Longa", bg=frame_pausa_longa["bg"], fg="#153047", font=("Arial", 16, "bold"))
@@ -60,12 +63,12 @@ titulo2.place(relx=0.5, rely=0.15, anchor="center")
 pausa_longa_container = tk.Frame(frame_pausa_longa, bg=frame_pausa_longa["bg"])
 pausa_longa_container.pack(expand=True)
 
-botao_pausa_longa = tk.Button(pausa_longa_container, text=">", bg=frame_pausa_longa["bg"], fg="#153047", font=("Arial", 20, "bold"), border=10, relief=tk.FLAT)
+botao_pausa_longa = tk.Button(pausa_longa_container, command=lambda: timer.pausa_leve(segundos_totais_pausa_longa, label_min3, label_seg3, root), text=">", bg=frame_pausa_longa["bg"], fg="#153047", font=("Arial", 20, "bold"), border=10, relief=tk.FLAT)
 botao_pausa_longa.pack(side='bottom')
 
-tk.Label(pausa_longa_container, text="00", bg=frame_pausa_longa["bg"], fg="#153047",
-         font=("Arial", 130, "bold"), anchor="center").pack(expand=True)
-tk.Label(pausa_longa_container, text="00", bg=frame_pausa_longa["bg"], fg="#153047",
-         font=("Arial", 130, "bold"), anchor="center").pack()
+label_min3 = tk.Label(pausa_longa_container, text="15", bg=frame_pausa_longa["bg"], fg="#153047", font=("Arial",130, "bold"), anchor="center")
+label_min3.pack(expand=True)
+label_seg3 = tk.Label(pausa_longa_container, text="00", bg=frame_pausa_longa["bg"], fg="#153047", font=("Arial", 130, "bold"), anchor="center")
+label_seg3.pack()
 
 root.mainloop()
