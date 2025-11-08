@@ -1,4 +1,5 @@
 from pomodoro import settings
+from pomodoro.sounds import sons
 
 # VARIÁVEL GLOBAL: Uma lista para que a função possa modificar o valor
 TIMER_ID = [None] 
@@ -19,7 +20,9 @@ def foco(segundos_totais_foco=None, label_min=None, label_seg=None, root=None):
             
         
         # Limpar o ID do timer quando terminar
-        TIMER_ID[0] = None 
+        else:
+            sons.tocar_som()
+            TIMER_ID[0] = None 
 
 
     # Cancela qualquer timer anterior se o botão for pressionado enquanto um timer roda
@@ -46,7 +49,9 @@ def pausa_leve(segundos_totais_pausa_leve=None, label_min2=None, label_seg2=None
             
         
         # Limpar o ID do timer quando terminar
-        TIMER_ID[0] = None 
+        else:
+            sons.tocar_som()
+            TIMER_ID[0] = None 
 
     # Cancela qualquer timer anterior se o botão for pressionado enquanto um timer roda
     if TIMER_ID[0]:
@@ -71,7 +76,9 @@ def pausa_longa(segundos_totais_pausa_longa=None, label_min3=None, label_seg3=No
             TIMER_ID[0] = root.after(1000, atualizar) 
             
         # Limpar o ID do timer quando terminar
-        TIMER_ID[0] = None 
+        else:
+            sons.tocar_som
+            TIMER_ID[0] = None 
  
     # Cancela qualquer timer anterior se o botão for pressionado enquanto um timer roda
     if TIMER_ID[0]:
