@@ -1,9 +1,9 @@
-from pomodoro import ui, timer
+from pomodoro import ui
 
 def main():
-    print("Iniciando Pomodoro App...")
+    print("Iniciando...")
     ui.iniciar_interface()
-    print("Aplicação encerrada.")
+    print("Encerrando...")
 
 if __name__ == "__main__":
     main()

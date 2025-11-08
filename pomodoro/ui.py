@@ -1,10 +1,50 @@
 import tkinter as tk
 from pomodoro import timer
+from pomodoro import settings
 
 def iniciar_interface():
 
-    #Espaço para eu armazenar o tempo de cada uma das variaveis em segundos
-    segundos_totais_foco = 1500
+    def duas_lambd():
+        segundos_totais_foco = settings.tempo_foco 
+        timer.foco(segundos_totais_foco, label_min, label_seg, root)
+
+    def editar_tempo_foco(root, label_min, label_seg):
+        # Cria uma janela secundária
+        janela = tk.Toplevel(root)
+        janela.title("Editar Tempo de Foco")
+        janela.geometry("300x150")
+        janela.configure(bg="#f0f0f0")
+
+        # Label e campo de entrada
+        label = tk.Label(janela, text="Novo tempo de foco (em minutos):", bg="#f0f0f0")
+        label.pack(pady=10)
+
+        entrada = tk.Entry(janela)
+        entrada.pack(pady=5)
+
+        def salvar():
+            try:
+                novo_tempo_min = int(entrada.get())
+                novo_tempo_seg = novo_tempo_min * 60  # converte minutos para segundos
+
+                # Atualiza o valor no settings.py
+                settings.atualizar_tempos(novo_foco=novo_tempo_min)
+
+                # Atualiza as labels na interface principal
+                minutos, segundos = divmod(novo_tempo_seg, 60)
+                label_min.config(text=f"{minutos:02}")
+                label_seg.config(text=f"{segundos:02}")
+
+                janela.destroy()
+
+            except ValueError:
+                label.config(text="Digite um número válido!", fg="red")
+
+        # Botão para salvar
+        btn_salvar = tk.Button(janela, text="Salvar", command=salvar)
+        btn_salvar.pack(pady=10)
+
+    #Espaço para eu armazenar o tempo das pausas fixa
     segundos_totais_pausa_leve = 300
     segundos_totais_pausa_longa = 900
 
@@ -26,7 +66,7 @@ def iniciar_interface():
     frame_pausa_leve.pack(side="left", fill="both", expand=True)
     frame_pausa_longa.pack(side="left", fill="both", expand=True)
 
-    # --- BLOCO FOCO ---
+    # --- BLOCO FOCO --
     titulo = tk.Label(frame_foco, text="Foco", bg=frame_foco["bg"], fg="#471515", font=("Arial", 16, "bold"))
     titulo.place(relx=0.5, rely=0.15, anchor="center")
 
@@ -37,10 +77,13 @@ def iniciar_interface():
     label_min.pack(expand=True)
 
     label_seg = tk.Label(foco_container, text="00", bg=frame_foco["bg"], fg="#471515", font=("Arial", 130, "bold"), anchor="center")
-    label_seg.pack() 
+    label_seg.pack()
 
-    botao_foco = tk.Button(foco_container, command=lambda: timer.foco(segundos_totais_foco, label_min, label_seg, root), text=">", bg=frame_foco["bg"], fg="#471515", font=("Arial", 20, "bold"), border=10, relief=tk.FLAT)
-    botao_foco.pack(side='bottom')
+    botao_foco = tk.Button(foco_container, command=lambda: duas_lambd(), text=">", bg=frame_foco["bg"], fg="#471515", font=("Arial", 20, "bold"), border=10, relief=tk.FLAT)
+    botao_foco.pack(side='left')
+
+    btn_editar_foco = tk.Button(foco_container, text="Editar Tempo de Foco",command=lambda: editar_tempo_foco(root, label_min, label_seg),bg=frame_foco["bg"], fg="#471515",font=("Arial", 10, "bold"), border=10, relief=tk.FLAT)
+    btn_editar_foco.pack(side='left')  
 
     # --- BLOCO PAUSA LEVE ---
     titulo1 = tk.Label(frame_pausa_leve, text="Pausa Leve", bg=frame_pausa_leve["bg"], fg="#14401D", font=("Arial", 16, "bold"))
